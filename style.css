@@ -4,6 +4,7 @@
   box-sizing: border-box;
   font-family: arial, sans-serif;
 }
+
 .start {
   width: 100%;
   height: 100vh;
@@ -71,11 +72,93 @@
   border: 1px solid black;
   box-shadow: 2px 2px 20px blue;
 }
+
 .content {
+  width: 100vw;
+  height: 100vh;
   display: none;
+  position: relative;
+  flex-wrap: wrap;
 }
 .image {
+  position: absolute;
+  z-index: -1;
+}
+.cards {
+  position: absolute;
+  z-index: 100;
+
   width: 100%;
   height: 100%;
-  background-size: contain;
+  display: flex;
+  flex-wrap: wrap;
+}
+.easy {
+  flex-basis: 22%;
+  max-height: 25vh;
+  flex-grow: 1;
+  border: 2px solid white;
+}
+.medium {
+  flex-basis: 22%;
+  height: 16.66vh;
+  flex-grow: 1;
+  border: 2px solid white;
+}
+.hard {
+  flex-basis: 15%;
+  height: 16.66vh;
+  flex-grow: 1;
+  border: 2px solid white;
+}
+.unactive {
+  background-color: transparent !important;
+}
+.clicked {
+  background-color: gray !important;
+}
+
+.image {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.finishMessage {
+  background-color: rgba(0, 0, 0, 0.7);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: none;
+}
+.gratz {
+  font-size: 30px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin: 20px;
+  color: yellow;
+}
+.timeShow {
+  font-size: 20px;
+  color: white;
+  margin: 20px;
+}
+.again {
+  border: 2px solid black;
+  box-shadow: 0 0 20px blue;
+  background-color: blue;
+  color: white;
+  padding: 10px;
+  text-transform: uppercase;
+  font-size: 14px;
+  font-weight: bold;
 }

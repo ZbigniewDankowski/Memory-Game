@@ -12,28 +12,37 @@
       <div class="start">
         <h1 class="title">Gra Memory</h1>
         <div class="categories">
-          <button class="category">Auta</button>
-          <button class="category">Zwierzęta</button>
-          <button class="category">Bikini</button>
+          <button class="category" data-name="people">Ludzie</button>
+          <button class="category" data-name="animals">Zwierzęta</button>
+          <button class="category" data-name="nature">Natura</button>
         </div>
         <div class="levels">
-          <button class="level">Łatwy</button>
-          <button class="level">Średni</button>
-          <button class="level">Trudny</button>
+          <button class="level" data-level="easy" data-elements="16">
+            Łatwy
+          </button>
+          <button class="level" data-level="medium" data-elements="24">
+            Średni
+          </button>
+          <button class="level" data-level="hard" data-elements="36">
+            Trudny
+          </button>
         </div>
         <button class="startBtn">Start</button>
       </div>
 
       <div class="content">
-        <div class="image"></div>
+        <div class="image">
+          <div class="cards"></div>
+        </div>
 
         <div class="finishMessage">
-          <h2 class="gratz">Gratulacje!!!</h2>
+          <h2 class="gratz">Gratulacje !!!</h2>
           <h3 class="timeShow">Twój czas to: <span class="time"></span></h3>
           <button class="again">Zagraj ponownie!</button>
         </div>
       </div>
     </div>
+
     <script src="script.js"></script>
   </body>
 </html>

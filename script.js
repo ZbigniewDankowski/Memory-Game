@@ -9,8 +9,10 @@ const cards = [];
 
 let activeCategory = "";
 let activeLevel = "";
-let activeColor = "";
+let activeElement = "";
+let activeCards = [];
 let gameElements = "";
+let gamePairs;
 
 const colors = {
   easy: [
@@ -96,7 +98,54 @@ const colors = {
     "saddlebrown",
   ],
 };
+const cardClick = function () {
+  activeElement = this;
+  activeElement.classList.remove("clicked");
+  if (activeCards.length === 0) {
+    activeCards.push(activeElement);
+  }
+  if (activeElement === activeCards[0]) return;
+  else {
+    activeCards.push(this);
+    cards.forEach((card) => {
+      card.removeEventListener("click", cardClick);
+    });
+    if (
+      activeCards[0].style.backgroundColor ===
+      activeCards[1].style.backgroundColor
+    ) {
+      setTimeout(() => {
+        activeCards.forEach((card) => {
+          card.style.opacity = "0";
+        });
 
+        cards.forEach((card) => {
+          card.addEventListener("click", cardClick);
+        });
+
+        activeCards = [];
+        activeElement = "";
+      }, 500);
+      gamePairs--;
+      if (gamePairs === 0) {
+      }
+    } else {
+      setTimeout(() => {
+        activeCards.forEach((card) => {
+          card.classList.add("clicked");
+        });
+
+        cards.forEach((card) => {
+          card.addEventListener("click", cardClick);
+        });
+
+        activeCards = [];
+        activeElement = "";
+      }, 500);
+    }
+  }
+  console.log(gamePairs);
+};
 const createGame = () => {
   if (activeLevel === "easy") {
     for (i = 0; i < gameElements; i++) {
@@ -157,4 +206,12 @@ startBtn.addEventListener("click", () => {
   game.style.display = "flex";
   image.style.backgroundImage = `url(https://placeimg.com/${window.innerWidth}/${window.innerHeight}/${activeCategory})`;
   createGame();
+
+  setTimeout(() => {
+    cards.forEach((card) => {
+      card.classList.add("clicked");
+      card.addEventListener("click", cardClick);
+    });
+  }, 1000);
+  gamePairs = gameElements / 2;
 });
