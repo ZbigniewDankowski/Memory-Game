@@ -1,3 +1,4 @@
+//Needed queryselectors
 const categories = [...document.querySelectorAll(".category")];
 const levels = [...document.querySelectorAll(".level")];
 const startBtn = document.querySelector(".startBtn");
@@ -8,8 +9,11 @@ const image = document.querySelector(".image");
 const finish = document.querySelector(".finishMessage");
 const playAgain = document.querySelector(".again");
 const time = document.querySelector(".time");
+
+//tab for divs
 const cards = [];
 
+// Needed variables
 let activeCategory = "";
 let activeLevel = "";
 let activeElement = "";
@@ -20,6 +24,7 @@ let startTime = 0;
 let endTime = 0;
 let gameTime = 0;
 
+//colors for each level
 const colors = {
   easy: [
     "red",
@@ -104,20 +109,29 @@ const colors = {
     "saddlebrown",
   ],
 };
+
+//function for click divs
 const cardClick = function () {
+  //check if clicked div is already unactive
   if (this.classList.contains("unactive")) return;
+
+  //if div is active show color and add div for active element
   activeElement = this;
   activeElement.classList.remove("clicked");
 
+  //push active element to tab for compare
   if (activeCards.length === 0) {
     activeCards.push(activeElement);
   }
+  // if click this same div return
   if (activeElement === activeCards[0]) return;
+  //if click other div push div to tab with active elements and remove event for all divs
   else {
     activeCards.push(this);
     cards.forEach((card) => {
       card.removeEventListener("click", cardClick);
     });
+    // if 2 divs have this same color add unactive class , delete from game , clear variables and add event for divs
     if (
       activeCards[0].style.backgroundColor ===
       activeCards[1].style.backgroundColor
@@ -137,6 +151,7 @@ const cardClick = function () {
         activeElement = "";
       }, 500);
       gamePairs--;
+      //if all divs unactive show finish message and show game time
       if (gamePairs === 0) {
         finish.classList.remove("finishMessage--unactive");
         playAgain.addEventListener("click", () => {
@@ -146,7 +161,9 @@ const cardClick = function () {
         gameTime = ((endTime - startTime) / 1000).toFixed(2);
         time.textContent = `${gameTime} sekund`;
       }
-    } else {
+    }
+    //if clicked divs are different we cover colors ,add event again for divs and clear variables
+    else {
       setTimeout(() => {
         activeCards.forEach((card) => {
           card.classList.add("clicked");
@@ -162,6 +179,7 @@ const cardClick = function () {
     }
   }
 };
+//function for create divs with colors, the amount depends on the selected level
 const createGame = () => {
   if (activeLevel === "easy") {
     for (i = 0; i < gameElements; i++) {
@@ -197,6 +215,7 @@ const createGame = () => {
     }
   }
 };
+// buttons for choice cattegory with the help of dataset
 categories.forEach((button) => {
   button.addEventListener("click", () => {
     categories.forEach((category) => {
@@ -206,7 +225,7 @@ categories.forEach((button) => {
     activeCategory = button.dataset.name;
   });
 });
-
+//button for choice level with the help of dataset
 levels.forEach((level) => {
   level.addEventListener("click", () => {
     levels.forEach((button) => {
@@ -217,6 +236,8 @@ levels.forEach((level) => {
     gameElements = level.dataset.elements;
   });
 });
+
+//start button shows game, hide menu, add image for bg and add clicked class for each div
 startBtn.addEventListener("click", () => {
   menu.style.display = "none";
   game.style.display = "flex";
