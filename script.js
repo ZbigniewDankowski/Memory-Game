@@ -5,6 +5,9 @@ const menu = document.querySelector(".start");
 const game = document.querySelector(".content");
 const cardsBox = document.querySelector(".cards");
 const image = document.querySelector(".image");
+const finish = document.querySelector(".finishMessage");
+const playAgain = document.querySelector(".again");
+const time = document.querySelector(".time");
 const cards = [];
 
 let activeCategory = "";
@@ -13,6 +16,9 @@ let activeElement = "";
 let activeCards = [];
 let gameElements = "";
 let gamePairs;
+let startTime = 0;
+let endTime = 0;
+let gameTime = 0;
 
 const colors = {
   easy: [
@@ -99,8 +105,10 @@ const colors = {
   ],
 };
 const cardClick = function () {
+  if (this.classList.contains("unactive")) return;
   activeElement = this;
   activeElement.classList.remove("clicked");
+
   if (activeCards.length === 0) {
     activeCards.push(activeElement);
   }
@@ -116,11 +124,13 @@ const cardClick = function () {
     ) {
       setTimeout(() => {
         activeCards.forEach((card) => {
-          card.style.opacity = "0";
+          card.classList.add("unactive");
         });
 
         cards.forEach((card) => {
-          card.addEventListener("click", cardClick);
+          if (card.classList.contains("clicked")) {
+            card.addEventListener("click", cardClick);
+          } else return;
         });
 
         activeCards = [];
@@ -128,6 +138,13 @@ const cardClick = function () {
       }, 500);
       gamePairs--;
       if (gamePairs === 0) {
+        finish.classList.remove("finishMessage--unactive");
+        playAgain.addEventListener("click", () => {
+          location.reload();
+        });
+        endTime = new Date().getTime();
+        gameTime = ((endTime - startTime) / 1000).toFixed(2);
+        time.textContent = `${gameTime} sekund`;
       }
     } else {
       setTimeout(() => {
@@ -144,7 +161,6 @@ const cardClick = function () {
       }, 500);
     }
   }
-  console.log(gamePairs);
 };
 const createGame = () => {
   if (activeLevel === "easy") {
@@ -214,4 +230,5 @@ startBtn.addEventListener("click", () => {
     });
   }, 1000);
   gamePairs = gameElements / 2;
+  startTime = new Date().getTime();
 });
