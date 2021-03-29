@@ -153,13 +153,16 @@ const cardClick = function () {
       gamePairs--;
       //if all divs unactive show finish message and show game time
       if (gamePairs === 0) {
-        finish.classList.remove("finishMessage--unactive");
-        playAgain.addEventListener("click", () => {
-          location.reload();
-        });
         endTime = new Date().getTime();
         gameTime = ((endTime - startTime) / 1000).toFixed(2);
         time.textContent = `${gameTime} sekund`;
+        setTimeout(() => {
+          finish.classList.remove("finishMessage--unactive");
+        }, 1000);
+
+        playAgain.addEventListener("click", () => {
+          location.reload();
+        });
       }
     }
     //if clicked divs are different we cover colors ,add event again for divs and clear variables
@@ -239,6 +242,10 @@ levels.forEach((level) => {
 
 //start button shows game, hide menu, add image for bg and add clicked class for each div
 startBtn.addEventListener("click", () => {
+  if (activeCategory === "" || activeLevel === "") {
+    alert("Wybierz kategorię i poziom trudności");
+    return;
+  }
   menu.style.display = "none";
   game.style.display = "flex";
   image.style.backgroundImage = `url(https://placeimg.com/${window.innerWidth}/${window.innerHeight}/${activeCategory})`;
